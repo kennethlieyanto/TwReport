@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="TwReport.Core/TwReport.Core.csproj" />
+  <Project Path="TwReport.Mailer/TwReport.Mailer.csproj" />
+</Solution>
