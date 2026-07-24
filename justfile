@@ -24,5 +24,17 @@ build:
 docker-build:
     docker build -t twreport .
 
-docker-run:
-    docker run --rm --env-file .env -v ~/.task:/root/.task -v ~/.config/task/taskrc:/etc/twreport/taskrc:ro -v ~/.config/task/taskrc:/etc/twreport/taskrc-secret:ro twreport --type daily
+docker-run-daily:
+    docker run --rm --env-file .env -v ~/.task:/root/.task -v ~/.config/task/taskrc:/etc/twreport/taskrc:ro -v ~/.config/task/taskrc-secret:/etc/twreport/taskrc-secret:ro twreport --type daily
+
+docker-run-weekly:
+    docker run --rm --env-file .env -v ~/.task:/root/.task -v ~/.config/task/taskrc:/etc/twreport/taskrc:ro -v ~/.config/task/taskrc-secret:/etc/twreport/taskrc-secret:ro twreport --type weekly
+
+docker-run-monthly:
+    docker run --rm --env-file .env -v ~/.task:/root/.task -v ~/.config/task/taskrc:/etc/twreport/taskrc:ro -v ~/.config/task/taskrc-secret:/etc/twreport/taskrc-secret:ro twreport --type monthly
+
+docker-run-quarterly:
+    docker run --rm --env-file .env -v ~/.task:/root/.task -v ~/.config/task/taskrc:/etc/twreport/taskrc:ro -v ~/.config/task/taskrc-secret:/etc/twreport/taskrc-secret:ro twreport --type quarterly
+
+docker-run-yearly:
+    docker run --rm --env-file .env -v ~/.task:/root/.task -v ~/.config/task/taskrc:/etc/twreport/taskrc:ro -v ~/.config/task/taskrc-secret:/etc/twreport/taskrc-secret:ro twreport --type yearly

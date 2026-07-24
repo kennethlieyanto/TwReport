@@ -24,6 +24,10 @@
         commitlint
         lefthook
       ];
+
+      shellHook = ''
+        export DOTNET_ROOT="${pkgs.dotnet-sdk_10}/share/dotnet"
+      '';
     };
   };
 }
