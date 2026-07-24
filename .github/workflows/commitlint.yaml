@@ -1,4 +1,4 @@
-name: Commitlint
+name: Commit lint
 
 on:
   pull_request:
@@ -12,4 +12,5 @@ jobs:
         with:
           fetch-depth: 0
       - uses: cachix/install-nix-action@v30
-      - run: nix develop --command commitlint --from ${{ github.event.pull_request.base.sha }}
+      - run: nix develop --command commitlint --from ${{
+          github.event.pull_request.base.sha }}
