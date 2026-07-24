@@ -10,6 +10,7 @@ public class TaskwarriorCli(string filter)
 
     public async Task<List<TaskwarriorTask>> GetCompletedTasks(DateTime startDate, DateTime endDate)
     {
+        await SyncAsync();
         var command = BuildExportCommand(startDate, endDate);
         var output = await ExecuteTaskCommand(command);
 
@@ -21,6 +22,7 @@ public class TaskwarriorCli(string filter)
 
     public async Task<int> GetCompletedTaskCount(DateTime startDate, DateTime endDate)
     {
+        await SyncAsync();
         var command = BuildCountCommand(startDate, endDate);
         var output = await ExecuteTaskCommand(command);
 
@@ -49,6 +51,31 @@ public class TaskwarriorCli(string filter)
         var startStr = startDate.ToString("yyyy-MM-dd");
         var endStr = endDate.ToString("yyyy-MM-dd");
         return $"{_filter} end.after:{startStr} end.before:{endStr} count";
+    }
+
+    private static async Task SyncAsync()
+    {
+        var psi = new ProcessStartInfo
+        {
+            FileName = "task",
+            Arguments = "sync",
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+
+        using var process = new Process();
+        process.StartInfo = psi;
+        process.Start();
+
+        await process.WaitForExitAsync();
+
+        if (process.ExitCode != 0)
+        {
+            var stderr = await process.StandardError.ReadToEndAsync();
+            throw new InvalidOperationException($"Task sync failed: {stderr}");
+        }
     }
 
     private static async Task<string> ExecuteTaskCommand(string command)
