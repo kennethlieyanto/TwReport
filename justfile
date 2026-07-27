@@ -38,3 +38,6 @@ docker-run-quarterly:
 
 docker-run-yearly:
     docker run --rm --env-file .env -v ~/.task:/root/.task -v ~/.config/task/taskrc:/etc/twreport/taskrc:ro -v ~/.config/task/taskrc-secret:/etc/twreport/taskrc-secret:ro twreport --type yearly
+
+helm-install:
+    helm install twreport ./helm/twreport/ -f ./helm/twreport/example-values.yaml -n twreport --create-namespace

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: twreport-taskrc
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "twreport.labels" . | nindent 4 }}
+data:
+  taskrc: |
+    news.version={{ .Values.taskrc.newsVersion }}
+    sync.server.url={{ .Values.taskrc.syncServerUrl }}

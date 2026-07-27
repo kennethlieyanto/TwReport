@@ -1,0 +1,56 @@
+{{- range $name, $job := .Values.cronjobs }}
+{{- if $job.enabled }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: twreport-{{ $name }}
+  namespace: {{ $.Values.namespace }}
+  labels:
+    {{- include "twreport.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ $name }}
+spec:
+  schedule: {{ $job.schedule | quote }}
+  timeZone: {{ $.Values.timezone | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "twreport.selectorLabels" $ | nindent 12 }}
+            app.kubernetes.io/component: {{ $name }}
+        spec:
+          containers:
+            - name: twreport
+              image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+              args: ["--type", {{ $job.type | quote }}]
+              env:
+                - name: RESEND_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: twreport-secrets
+                      key: resend-api-key
+              volumeMounts:
+                - name: taskrc
+                  mountPath: /etc/twreport/taskrc
+                  subPath: taskrc
+                  readOnly: true
+                - name: taskrc-secret
+                  mountPath: /etc/twreport/taskrc-secret
+                  subPath: taskrc-secret
+                  readOnly: true
+                - name: task-data
+                  mountPath: /root/.task
+          volumes:
+            - name: taskrc
+              configMap:
+                name: twreport-taskrc
+            - name: taskrc-secret
+              secret:
+                secretName: twreport-taskrc-secret
+            - name: task-data
+              persistentVolumeClaim:
+                claimName: {{ $.Values.pvc.taskData }}
+          restartPolicy: OnFailure
+{{- end }}
+{{- end }}

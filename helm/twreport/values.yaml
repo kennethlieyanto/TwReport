@@ -1,0 +1,42 @@
+namespace: twreport
+
+image:
+  repository: ghcr.io/kennethlieyanto/twreport
+  tag: latest
+
+timezone: UTC
+
+cronjobs:
+  daily:
+    enabled: true
+    schedule: "0 9 * * *"
+    type: daily
+  weekly:
+    enabled: true
+    schedule: "0 9 * * 0"
+    type: weekly
+  monthly:
+    enabled: true
+    schedule: "0 9 1 * *"
+    type: monthly
+  quarterly:
+    enabled: true
+    schedule: "0 9 1 1,4,7,10 *"
+    type: quarterly
+  yearly:
+    enabled: true
+    schedule: "0 9 1 1 *"
+    type: yearly
+
+resendApiKey: ""
+
+pvc:
+  taskData: twreport-task-data
+
+taskrc:
+  newsVersion: "3.4.2"
+  syncServerUrl: "https://taskchampion.example.com"
+
+taskrcSecret:
+  clientId: ""
+  encryptionSecret: ""
