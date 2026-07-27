@@ -28,6 +28,9 @@ cronjobs:
 
 resendApiKey: "re_XXXXXXXXXXXXXXXXXXXXXXXX"
 
+existingSecret: ""
+existingTaskrcSecret: ""
+
 pvc:
   taskData: twreport-task-data
 

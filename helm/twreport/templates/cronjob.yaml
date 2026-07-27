@@ -28,7 +28,7 @@ spec:
                 - name: RESEND_API_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: twreport-secrets
+                      name: {{ $.Values.existingSecret | default "twreport-secrets" }}
                       key: resend-api-key
               volumeMounts:
                 - name: taskrc
@@ -51,7 +51,7 @@ spec:
                 name: twreport-taskrc
             - name: taskrc-secret
               secret:
-                secretName: twreport-taskrc-secret
+                secretName: {{ $.Values.existingTaskrcSecret | default "twreport-taskrc-secret" }}
             - name: appsettings
               configMap:
                 name: twreport-mailer-appsettings
