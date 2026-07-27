@@ -26,7 +26,7 @@ cronjobs:
     schedule: "0 9 1 1 *"
     type: yearly
 
-resendApiKey: ""
+resendApiKey: "re_XXXXXXXXXXXXXXXXXXXXXXXX"
 
 pvc:
   taskData: twreport-task-data
@@ -38,3 +38,18 @@ taskrc:
 taskrcSecret:
   clientId: ""
   encryptionSecret: ""
+
+appsettings:
+  ReportConfig:
+    Taskwarrior:
+      Filter: "rc.context: status:completed -WAITING"
+    Subjects:
+      Daily: "TaskWarrior Daily Report - {date}"
+      Weekly: "TaskWarrior Weekly Report - {date}"
+      Monthly: "TaskWarrior Monthly Report - {date}"
+      Quarterly: "TaskWarrior Quarterly Report - {date}"
+      Yearly: "TaskWarrior Yearly Report - {date}"
+    Resend:
+      FromEmail: "mailer@example.com"
+      FromName: "John Doe"
+      ToEmail: "me@gmail.com"

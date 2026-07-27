@@ -39,6 +39,10 @@ spec:
                   mountPath: /etc/twreport/taskrc-secret
                   subPath: taskrc-secret
                   readOnly: true
+                - name: appsettings
+                  mountPath: /app/appsettings.json
+                  subPath: appsettings.json
+                  readOnly: true
                 - name: task-data
                   mountPath: /root/.task
           volumes:
@@ -48,6 +52,9 @@ spec:
             - name: taskrc-secret
               secret:
                 secretName: twreport-taskrc-secret
+            - name: appsettings
+              configMap:
+                name: twreport-mailer-appsettings
             - name: task-data
               persistentVolumeClaim:
                 claimName: {{ $.Values.pvc.taskData }}
