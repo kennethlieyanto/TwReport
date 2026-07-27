@@ -6,4 +6,4 @@ metadata:
   labels:
     {{- include "twreport.labels" . | nindent 4 }}
 data:
-  appsettings.json: {{ .Values.appsettings | toJson }}
+  appsettings.json: {{ .Values.appsettings | toJson | quote }}
