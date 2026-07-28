@@ -3,6 +3,13 @@ name: Build & Push Docker Image to GHCR
 on:
   push:
     branches: [main]
+    paths:
+      - 'TwReport.Core/**'
+      - 'TwReport.Mailer/**'
+      - 'TwReport.slnx'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'entrypoint.sh'
 
 env:
   REGISTRY: ghcr.io
